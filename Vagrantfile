@@ -35,8 +35,9 @@ Vagrant.configure("2") do |config|
   config.ssh.shell = "bash -l"
 
   config.ssh.keep_alive = true
-  config.ssh.forward_agent = false
+  config.ssh.forward_agent = true
   config.ssh.forward_x11 = false
   config.vagrant.host = :detect
+  config.ssh.private_key_path = "~/.ssh/id_rsa"
 end
 
