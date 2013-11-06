@@ -1,0 +1,112 @@
+---
+vagrantfile-local:
+    vm:
+        box: debian-wheezy72-x64-vbox43
+        box_url: 'https://puphpet.s3.amazonaws.com/debian-wheezy72-x64-vbox43.box'
+        hostname: null
+        network:
+            private_network: 192.168.56.101
+            forwarded_port:
+                YZETYgeD9d3r:
+                    host: ''
+                    guest: ''
+        provider:
+            virtualbox:
+                modifyvm:
+                    name: wheezy
+                    natdnshostresolver1: on
+                    memory: '2048'
+                setextradata:
+                    VBoxInternal2/SharedFoldersEnableSymlinksCreate/v-root: 1
+        provision:
+            puppet:
+                manifests_path: puppet/manifests
+                options:
+                    - --verbose
+                    - '--hiera_config /vagrant/hiera.yaml'
+                    - '--parser future'
+        synced_folder:
+            zzpQFr3qMfJb:
+                id: vagrant-root
+                source: 'D:\\DEV'
+                target: /var/www
+                nfs: 'false'
+        usable_port_range: 2200..2250
+    ssh:
+        host: null
+        port: null
+        private_key_path: null
+        username: vagrant
+        guest_port: null
+        keep_alive: true
+        forward_agent: false
+        forward_x11: false
+        shell: 'bash -l'
+    vagrant:
+        host: ':detect'
+server:
+    packages:
+        - git
+        - php5-mongo
+        - php5-redis
+    dot_files:
+        -
+            bash_aliases: null
+    _prevent_empty: ''
+apache:
+    modules:
+        - php
+        - rewrite
+    vhosts:
+        Ycwx9OSepQGw:
+            servername: shirazcode.dev
+            serveraliases:
+                - www.shirazcode.dev
+                - admin.shirazcode.dev
+                - service.shirazcode.dev
+            docroot: /var/www/work/vinohra/main
+            port: '80'
+            setenv:
+                - 'APP_ENV dev'
+            override:
+                - All
+    user: www-data
+    group: www-data
+    default_vhost: true
+    mpm_module: prefork
+php:
+    version: '55'
+    composer: '1'
+    modules:
+        php:
+            - cli
+            - intl
+            - mcrypt
+            - mbstring
+            - curl
+            - gd
+            - ldap
+            - mongo
+            - mysql
+            - redis
+        pear: {  }
+        pecl: { }
+    ini:
+        display_errors: On
+        error_reporting: '-1'
+        short_open_tag: On
+    timezone: Europe/Prague
+xdebug:
+    install: '1'
+    settings:
+        xdebug.default_enable: '1'
+        xdebug.remote_autostart: '0'
+        xdebug.remote_connect_back: '1'
+        xdebug.remote_enable: '1'
+        xdebug.remote_handler: dbgp
+        xdebug.remote_port: '9000'
+mysql:
+    root_password: root
+    phpmyadmin: 0
+    databases: {  }
+
