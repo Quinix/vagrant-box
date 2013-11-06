@@ -47,8 +47,13 @@ vagrantfile-local:
 server:
     packages:
         - git
-        - php5-mongo
-        - php5-redis
+        - mongodb-10gen
+        - redis-server
+        - htop
+        - curl 
+        - build-essential 
+        - openssl 
+        - libssl-dev 
     dot_files:
         -
             bash_aliases: null
@@ -82,7 +87,6 @@ php:
             - cli
             - intl
             - mcrypt
-            - mbstring
             - curl
             - gd
             - ldap

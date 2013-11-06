@@ -375,3 +375,12 @@ define mysql_db (
   }
 }
 
+apt::source { 'mongodb':
+    location          => 'http://downloads-distro.mongodb.org/repo/debian-sysvinit',
+    release           => 'dist',
+    repos             => '10gen',
+    key               => '7F0CEB10',
+    key_server        => 'keyserver.ubuntu.com',
+    include_src       => false
+  }
+
