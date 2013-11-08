@@ -5,13 +5,15 @@ Vagrant.configure("2") do |config|
   config.vm.network "private_network", ip: "192.168.56.101"
 
 
-  config.vm.synced_folder "D:\\DEV", "/var/www", id: "vagrant-root", :nfs => false
+  config.vm.synced_folder "D:\\DEV\\web", "/var/www/web", id: "vagrant-root", :nfs => false
+  config.vm.synced_folder "D:\\DEV\\work", "/var/www/work", id: "vagrant-root", :nfs => false
 
   config.vm.usable_port_range = (2200..2250)
   config.vm.provider :virtualbox do |virtualbox|
     virtualbox.customize ["modifyvm", :id, "--name", "wheezy"]
     virtualbox.customize ["modifyvm", :id, "--natdnshostresolver1", "on"]
-    virtualbox.customize ["modifyvm", :id, "--memory", "2048"]
+    virtualbox.customize ["modifyvm", :id, "--memory", "3078"]
+    virtualbox.customize ["modifyvm", :id, "--cpus", "2"]
     virtualbox.customize ["setextradata", :id, "--VBoxInternal2/SharedFoldersEnableSymlinksCreate/v-root", "1"]
   end
 

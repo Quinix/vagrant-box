@@ -15,7 +15,8 @@ vagrantfile-local:
                 modifyvm:
                     name: wheezy
                     natdnshostresolver1: on
-                    memory: '2048'
+                    memory: '3072'
+                    cpus: '2'
                 setextradata:
                     VBoxInternal2/SharedFoldersEnableSymlinksCreate/v-root: 1
         provision:
@@ -28,8 +29,13 @@ vagrantfile-local:
         synced_folder:
             zzpQFr3qMfJb:
                 id: vagrant-root
-                source: 'D:\\DEV'
-                target: /var/www
+                source: 'D:\\DEV\\web'
+                target: /var/www/web
+                nfs: 'false'
+            aapQFr3qMfJb:
+                id: vagrant-root
+                source: 'D:\\DEV\\work'
+                target: /var/www/work
                 nfs: 'false'
         usable_port_range: 2200..2250
     ssh:
@@ -54,6 +60,7 @@ server:
         - build-essential 
         - openssl 
         - libssl-dev 
+        - translate-toolkit
     dot_files:
         -
             bash_aliases: null
@@ -69,7 +76,7 @@ apache:
                 - www.shirazcode.dev
                 - admin.shirazcode.dev
                 - service.shirazcode.dev
-            docroot: /var/www/work/vinohra/main
+            docroot: /var/www/work/vinohra/main/www
             port: '80'
             setenv:
                 - 'APP_ENV dev'
@@ -91,7 +98,6 @@ php:
             - gd
             - ldap
             - mongo
-            - mysql
             - redis
         pear: {  }
         pecl: { }
@@ -99,16 +105,28 @@ php:
         display_errors: On
         error_reporting: '-1'
         short_open_tag: On
+ 
+        display_startup_errors: On
+        memory_limit: "1024M"
+        post_max_size: 20M
+        upload_max_filesize: 20M
+        "opcache.enable_cli": On
+        "opcache.fast_shutdown": On
+        "opcache.memory_consumption": 248
+        "opcache.max_accelerated_files": 10000
     timezone: Europe/Prague
 xdebug:
     install: '1'
     settings:
-        xdebug.default_enable: '1'
+        xdebug.default_enable: '0'
         xdebug.remote_autostart: '0'
         xdebug.remote_connect_back: '1'
         xdebug.remote_enable: '1'
         xdebug.remote_handler: dbgp
         xdebug.remote_port: '9000'
+        xdebug.overload_var_dump: Off
+        xdebug.profiler_enable_trigger: On
+        xdebug.profiler_output_dir: "/var/www/web/_profiler"
 mysql:
     root_password: root
     phpmyadmin: 0
